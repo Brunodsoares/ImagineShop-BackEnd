@@ -8,9 +8,11 @@ import {extname} from "path"
 import { authMiddleware } from "./middleware/authMiddleware.js";
 import { ProductService } from "./services/product-service.js";
 import { UserService } from "./services/user-service.js";
+import cors from "cors"
 
 const app = express();
-const port = 3000;
+app.use(cors())
+const port = 3001;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -34,6 +36,7 @@ app.get("/", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password)
   const userService = new UserService();
   const userLogged = await userService.login(email, password);
   if (userLogged) {
