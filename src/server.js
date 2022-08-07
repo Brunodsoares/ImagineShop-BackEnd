@@ -37,7 +37,7 @@ app.post("/login", async (req, res) => {
   const userService = new UserService();
   const userLogged = await userService.login(email, password);
   if (userLogged) {
-    const secretKey = process.env.SECRET_KEY;
+    const secretKey = `${process.env.SECRET_KEY}`;
     const token = jwt.sign({ user: userLogged }, secretKey, {
       expiresIn: "1d",
     });
@@ -103,6 +103,7 @@ app.put("/users/:id", async (req, res) => {
   }
   return res.status(404).json({ message: "Usuario não encontrado" });
 });
+
 
 app.post("/products", uploadMiddleware.single("image"), async (req, res) => {
   const { name, description, price, summary, stock } = req.body;

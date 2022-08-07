@@ -7,7 +7,7 @@ export const authMiddleware = (req, res, next) => {
   if (!token) {
    return res.status(401).json({ message: "Sem autorização, faça o login." });
   }
-  const secretKey = process.env.SECRET_KEY;
+  const secretKey = `${process.env.SECRET_KEY}`;
   jwt.verify(
     token,
     secretKey,
@@ -19,8 +19,7 @@ export const authMiddleware = (req, res, next) => {
           .json({ message: "Aconteceu um erro ao logar no sistema." });
       }
       const isValidToken = decodedToken && decodedToken.user;
-      console.log(decodedToken);
-
+     
       if (!isValidToken) {
         return res
           .status(401)
