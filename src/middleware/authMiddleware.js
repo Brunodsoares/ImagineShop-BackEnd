@@ -7,7 +7,7 @@ export const authMiddleware = (req, res, next) => {
   if (!token) {
    return res.status(401).json({ message: "Sem autorização, faça o login." });
   }
-  const secretKey = `${process.env.SECRET_KEY}`;
+  const secretKey = process.env.SECRET_KEY;
   jwt.verify(
     token,
     secretKey,

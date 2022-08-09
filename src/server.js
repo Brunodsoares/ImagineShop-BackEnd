@@ -36,11 +36,10 @@ app.get("/", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password)
   const userService = new UserService();
   const userLogged = await userService.login(email, password);
   if (userLogged) {
-    const secretKey = `${process.env.SECRET_KEY}`;
+    const secretKey = process.env.SECRET_KEY;
     const token = jwt.sign({ user: userLogged }, secretKey, {
       expiresIn: "1d",
     });
